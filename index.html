@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>randomStr</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        #root {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+            background-color: black;
+            color: rgb(6, 235, 6);
+            font-family: sans-serif;
+        }
+        .mouse{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at var(--x) var(--y),transparent 1%,rgba(0,0,0,0.95) 15%);
+        }
+    </style>
+</head>
+
+<body>
+    <section id="root" onmousemove="random()">
+        <div class="mouse"></div>
+        <span class="text" style="word-wrap: break-word;"></span>
+    </section>
+
+    <script>
+        const root = document.getElementById("root");
+
+        function getRandom(val) {
+            let result = "";
+            const chara = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            let counter = 0;
+            while(counter < val) {
+                result += chara.charAt(Math.floor(Math.random() * chara.length));
+                counter++;
+            }
+            return result;
+        }
+
+        function random() {
+            const height = root.offsetHeight;
+            const width = root.offsetWidth;
+            const wide = (height * width) / 180;
+            const p = document.querySelector(".text");
+            p.innerHTML = getRandom(wide);
+        }
+
+        const body = document.documentElement;
+        body.addEventListener("mousemove", (e) => {
+            body.style.setProperty("--y", e.clientY + "px");
+            body.style.setProperty("--x", e.clientX + "px");
+        });
+    </script>
+</body>
+
+</html>
